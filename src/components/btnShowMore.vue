@@ -1,39 +1,51 @@
 <template>
-  <v-layout style="height: 128px">
-    <div class="mx-auto my-4">
-      <v-expansion-panels @click.active:="active = !active" class="border rounded">
-        <v-expansion-panel
-          title="Show More"
-          text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi, ratione debitis quis est labore voluptatibus! Eaque cupiditate minima"
-        >
-        </v-expansion-panel>
-      </v-expansion-panels>
-    </div>
-
-    <v-bottom-navigation :active="active" color="ligth-grey" border-radius="70px">
-      <v-btn>
-        <v-icon>mdi-history</v-icon>
-
-        Recents
-      </v-btn>
-
-      <v-btn>
-        <v-icon>mdi-heart</v-icon>
-
-        Favorites
-      </v-btn>
-
-      <v-btn>
-        <v-icon>mdi-map-marker</v-icon>
-
-        Nearby
-      </v-btn>
-    </v-bottom-navigation>
-  </v-layout>
+  <div>
+    <v-expansion-panels v-model="panel" multiple>
+      <v-expansion-panel
+        title="Foo"
+        text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        value="foo"
+      ></v-expansion-panel>
+    </v-expansion-panels>
+  </div>
 </template>
 
 <script>
+
+import { onMounted, onUnmounted } from 'vue'
+
 export default {
-  data: () => ({ active: true })
+    data () {
+      return {
+        panel: [],
+      }
+    },
+    methods: {
+      all () {
+        this.panel = ['foo', 'bar', 'baz']
+      },
+      none () {
+        this.panel = []
+      },
+    },
+  }
+
+
+  setup (props){
+    const handleClick = () => {
+  console.log('Clicou no botão!')
 }
+
+onMounted(() => {
+  const showMore = document.querySelector('#show-more')
+  showMore.addEventListener('click', handleClick)
+})
+
+onUnmounted(() => {
+  const showMore = document.querySelector('#show-more')
+  showMore.removeEventListener('click', handleClick)
+})
+
+  return handleClick
+  }
 </script>
